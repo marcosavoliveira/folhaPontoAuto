@@ -29,6 +29,7 @@ public class ScheduleHoursBuilder {
         String stringDate =firsDateRow+"/"+month+"/"+year;
         return new SimpleDateFormat("dd/MM/yyyy").parse(stringDate);
     }
+
     private DefaultTableModel setScheduleTableModel(Date firstScheduleDay, int numRows, DefaultTableModel scheduleModel){
         scheduleModel.setRowCount(0);
         for(int i=0;i<numRows;i++){
@@ -36,32 +37,37 @@ public class ScheduleHoursBuilder {
             c.setTime(firstScheduleDay);
             c.add(Calendar.DATE, i);
             Date day = c.getTime();
-            scheduleModel.addRow(new Object[]{new SimpleDateFormat("dd/MM/yyyy").format(day),verifyWeekend(c,1),
-                                                                                                    verifyWeekend(c,2),
-                                                                                                    verifyWeekend(c,3),
-                                                                                                    verifyWeekend(c,4),
+            scheduleModel.addRow(new Object[]{new SimpleDateFormat("dd/MM/yyyy").format(day),generateEntry(c,1),
+                                                                                                    generateEntry(c,2),
+                                                                                                    generateEntry(c,3),
+                                                                                                    generateEntry(c,4),
                                                                                                     ""});
         }
         return scheduleModel;
     }
-    private String verifyWeekend(Calendar c,int collunm){
-        int weekDay = c.get(Calendar.DAY_OF_WEEK);
-        String gerarEntrada="";
-        if(weekDay == c.SATURDAY){
-            gerarEntrada = "SÁBADO";
-        }
-        if(weekDay == c.SUNDAY){
-            gerarEntrada = "DOMINGO";
-        }
-        if(!gerarEntrada.isEmpty()){
-            if(collunm == 1){
-                return gerarEntrada;
+    private String generateEntry(Calendar c, int column){
+        String entry = verifyWeekend(c);
+        if(!entry.isEmpty()){
+            if(column == 1){
+                return entry;
             }else{
                 return "";
             }
         }else{
-            gerarEntrada = "00:01";
+            entry = "00:01";
         }
-        return gerarEntrada;
+        return entry;
+    }
+
+    private String verifyWeekend(Calendar c){
+        int intWeekDay = c.get(Calendar.DAY_OF_WEEK);
+        String weekDay="";
+        if(intWeekDay == Calendar.SATURDAY){
+            weekDay = "SÁBADO";
+        }
+        if(intWeekDay == Calendar.SUNDAY){
+            weekDay = "DOMINGO";
+        }
+        return weekDay;
     }
 }
