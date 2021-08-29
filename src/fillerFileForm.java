@@ -11,6 +11,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.Random;
 
 public class fillerFileForm extends JFrame{
     final String[] columnNames = {"Data", "Horário de Entrada", "Entrada no Intervalo", "Saída do Intervalo","Horário de Saída", "Stand By"};
@@ -40,10 +41,11 @@ public class fillerFileForm extends JFrame{
                 }
             }
         });
+
         SpinnerModel yearModel = new SpinnerNumberModel(2021, 2020, 2200, 1);
         SpinnerModel monthModel = new SpinnerNumberModel(1, 1, 12, 1);
-        SpinnerModel monthDayModel = new SpinnerNumberModel(20, 1, 31, 1);
-        SpinnerModel howManyDays = new SpinnerNumberModel(20, 1, 31, 1);
+        SpinnerModel monthDayModel = new SpinnerNumberModel(25, 1, 31, 1);
+        SpinnerModel howManyDays = new SpinnerNumberModel(28, 1, 31, 1);
         spinner4.setModel(yearModel);
         spinner3.setModel(monthModel);
         spinner2.setModel(monthDayModel);
@@ -69,7 +71,7 @@ public class fillerFileForm extends JFrame{
             table1.setModel(buildSchedule.buildTableModel(header,table1.getModel()));
         });
 
-        gravarButton.addActionListener(e -> System.out.println("Até agora nada"));
+        gravarButton.addActionListener(e -> System.out.println(+new Random().nextInt(5+5)-5));
     }
 
     public static void main(String[] Args) throws ParseException {
