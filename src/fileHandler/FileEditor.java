@@ -3,6 +3,8 @@ package fileHandler;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import Footer.FooterDTO;
 import org.apache.poi.EncryptedDocumentException;
@@ -22,7 +24,7 @@ public void openFile(FooterDTO footer, String date, String path, DefaultTableMod
 
             Sheet sheet = workbook.getSheetAt(0);
             Cell monthReference = sheet.getRow(3).getCell(0);
-            monthReference.setCellValue(date);
+            monthReference.setCellValue(new SimpleDateFormat("dd/MM/yyyy").parse(date));
 
             for(int row =0; row < scheduleValues.getRowCount(); row++){
                 for(int col=0;col < scheduleValues.getColumnCount(); col++){
@@ -46,7 +48,7 @@ public void openFile(FooterDTO footer, String date, String path, DefaultTableMod
             workbook.close();
             outputStream.close();
 
-        } catch (IOException | EncryptedDocumentException ex) {
+        } catch (IOException | EncryptedDocumentException | ParseException ex) {
             ex.printStackTrace();
         }
     }

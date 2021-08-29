@@ -16,34 +16,38 @@ public class DefineHours {
     protected Map<String, String> generateEntry(){
         int max = 5;
         int min = 5;
-        Map<String, String> entryMap = new TreeMap<>();
         int hour1 = 9 * 60;
-        int firstCol = hour1 +randomizeMinutes(max,min);
         int hour2 = 12 * 60;
-        if(firstCol > hour1){
+        int hour4 = 18 * 60;
+
+        int firstCol = hour1 +randomizeMinutes(max,min);
+
+        if(firstCol < hour1){
             max = -1;
             min = 4;
         }else{
             min = 1;
         }
+
         int secondCol = hour2 +randomizeMinutes(max,min);
         int correctionOut = secondCol-firstCol-180;
+
         int correctionLunch = 0;
         if(correctionOut > 5){
             correctionLunch = correctionOut-5;
-            correctionOut = 5;
+            correctionOut = -5;
         }
         if(correctionOut < -5){
             correctionLunch = correctionOut+5;
-            correctionOut = -5;
+            correctionOut = 5;
         }
         if(correctionOut ==0){
             correctionOut = 1;
         }
-        int thirdCol = secondCol +60+correctionLunch;
-        int hour4 = 18 * 60;
-        int fourthCol = hour4 +correctionOut;
 
+        int thirdCol = secondCol +60+correctionLunch;
+        int fourthCol = hour4 +correctionOut;
+        Map<String, String> entryMap = new TreeMap<>();
         entryMap.put("1",formatHours(firstCol));
         entryMap.put("2",formatHours(secondCol));
         entryMap.put("3",formatHours(thirdCol));

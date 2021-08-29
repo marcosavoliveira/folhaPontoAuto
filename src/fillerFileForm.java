@@ -23,7 +23,10 @@ public class fillerFileForm extends JFrame{
     private JSpinner spinner3;
     private JButton gravarButton;
     private JButton gerarButton;
-    MaskFormatter hourMask = new MaskFormatter("##:##");
+    MaskFormatter hourMask1 = new MaskFormatter("##:##");
+    MaskFormatter hourMask2 = new MaskFormatter("##:##");
+    MaskFormatter hourMask3 = new MaskFormatter("##:##");
+    MaskFormatter hourMask4 = new MaskFormatter("##:##");
     private JFormattedTextField formattedTextField1;
     private JFormattedTextField formattedTextField2;
     private JFormattedTextField formattedTextField3;
@@ -57,10 +60,10 @@ public class fillerFileForm extends JFrame{
         table1.setModel(model);
         table1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        hourMask.install(formattedTextField1);
-        hourMask.install(formattedTextField2);
-        hourMask.install(formattedTextField3);
-        hourMask.install(formattedTextField4);
+        hourMask1.install(formattedTextField1);
+        hourMask2.install(formattedTextField2);
+        hourMask3.install(formattedTextField3);
+        hourMask4.install(formattedTextField4);
 
         gerarButton.addActionListener(e -> {
             header.setFirstDay((Integer) spinner2.getValue());
@@ -82,7 +85,7 @@ public class fillerFileForm extends JFrame{
             footer.setNightlyHours(formattedTextField4.getText());
             FileEditor file = new FileEditor();
             String date = "01/"+(header.getMonth()+1)+"/"+header.getYear();
-            file.openFile(footer,date,"D:\\Dropbox\\março-21 - Entregar.xlsx",(DefaultTableModel) table1.getModel());
+            file.openFile(footer,date,"D:\\Dropbox\\Teste - Entregar.xlsx",(DefaultTableModel) table1.getModel());
         });
     }
 
