@@ -47,6 +47,7 @@ public class DefineHours {
 
         int thirdCol = secondCol +60+correctionLunch;
         int fourthCol = hour4 +correctionOut;
+
         Map<String, String> entryMap = new TreeMap<>();
         entryMap.put("1",formatHours(firstCol));
         entryMap.put("2",formatHours(secondCol));
