@@ -10,7 +10,6 @@ import Utils.frameMethods;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.ParseException;
-import java.util.Date;
 import java.util.Random;
 
 public class fillerFileForm extends JFrame{
