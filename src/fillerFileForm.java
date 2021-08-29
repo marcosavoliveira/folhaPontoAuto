@@ -4,16 +4,18 @@ import javax.swing.table.TableModel;
 import javax.swing.text.MaskFormatter;
 
 import Body.ScheduleHoursBuilder;
+import Footer.FooterDTO;
 import Header.HeaderDTO;
 import Utils.frameMethods;
+import fileHandler.FileEditor;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.ParseException;
-import java.util.Random;
 
 public class fillerFileForm extends JFrame{
     final String[] columnNames = {"Data", "Horário de Entrada", "Entrada no Intervalo", "Saída do Intervalo","Horário de Saída", "Stand By"};
+    HeaderDTO header = new HeaderDTO();
     private JPanel panel1;
     private JSpinner spinner1;
     private JSpinner spinner2;
@@ -61,7 +63,6 @@ public class fillerFileForm extends JFrame{
         hourMask.install(formattedTextField4);
 
         gerarButton.addActionListener(e -> {
-            HeaderDTO header = new HeaderDTO();
             header.setFirstDay((Integer) spinner2.getValue());
             header.setNumOfDays((Integer) spinner1.getValue());
             header.setMonth((Integer) spinner3.getValue());
@@ -70,7 +71,19 @@ public class fillerFileForm extends JFrame{
             table1.setModel(buildSchedule.buildTableModel(header,table1.getModel()));
         });
 
-        gravarButton.addActionListener(e -> System.out.println(+new Random().nextInt(5+5)-5));
+        gravarButton.addActionListener(e -> {
+            if(table1.getRowCount()==0){
+                JOptionPane.showMessageDialog(null,"Valores não gerados, impossível efetuar gravação","Erro",JOptionPane.ERROR_MESSAGE);
+            }
+            FooterDTO footer = new FooterDTO();
+            footer.setNormalEH(formattedTextField1.getText());
+            footer.setSpecialEH(formattedTextField2.getText());
+            footer.setWarningHours(formattedTextField3.getText());
+            footer.setNightlyHours(formattedTextField4.getText());
+            FileEditor file = new FileEditor();
+            String date = "01/"+(header.getMonth()+1)+"/"+header.getYear();
+            file.openFile(footer,date,"D:\\Dropbox\\março-21 - Entregar.xlsx",(DefaultTableModel) table1.getModel());
+        });
     }
 
     public static void main(String[] Args) throws ParseException {
