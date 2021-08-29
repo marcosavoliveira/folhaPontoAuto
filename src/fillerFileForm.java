@@ -85,7 +85,8 @@ public class fillerFileForm extends JFrame{
             footer.setNightlyHours(formattedTextField4.getText());
             FileEditor file = new FileEditor();
             String date = "01/"+(header.getMonth()+1)+"/"+header.getYear();
-            file.openFile(footer,date,"D:\\Dropbox\\Teste - Entregar.xlsx",(DefaultTableModel) table1.getModel());
+            String path = JOptionPane.showInputDialog(null, "Caminho do Arquivo a ser atualizado: ");
+            file.openFile(footer,date,path,(DefaultTableModel) table1.getModel());
         });
     }
 

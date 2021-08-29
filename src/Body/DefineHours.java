@@ -30,6 +30,7 @@ public class DefineHours {
         }
 
         int secondCol = hour2 +randomizeMinutes(max,min);
+
         int correctionOut = secondCol-firstCol-180;
 
         int correctionLunch = 0;
@@ -47,6 +48,9 @@ public class DefineHours {
 
         int thirdCol = secondCol +60+correctionLunch;
         int fourthCol = hour4 +correctionOut;
+
+        int workDay = secondCol-firstCol+fourthCol-thirdCol;
+        fourthCol = fourthCol+(8*60-workDay);
 
         Map<String, String> entryMap = new TreeMap<>();
         entryMap.put("1",formatHours(firstCol));

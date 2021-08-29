@@ -13,6 +13,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 public class FileEditor {
@@ -47,8 +48,9 @@ public void openFile(FooterDTO footer, String date, String path, DefaultTableMod
             workbook.write(outputStream);
             workbook.close();
             outputStream.close();
-
+            JOptionPane.showMessageDialog(null,"Arquivo Gravado com Sucesso","Sucesso",JOptionPane.INFORMATION_MESSAGE);
         } catch (IOException | EncryptedDocumentException | ParseException ex) {
+            JOptionPane.showMessageDialog(null,"Arquivo não encontrado ou já em uso, certifique - se de que esteja fechado ou caminho correto","Erro",JOptionPane.ERROR_MESSAGE);
             ex.printStackTrace();
         }
     }
