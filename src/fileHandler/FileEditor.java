@@ -1,8 +1,6 @@
 package fileHandler;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -18,7 +16,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class FileEditor {
 
-public void openFile(FooterDTO footer, String date, String path, DefaultTableModel scheduleValues){
+    public void openFile(FooterDTO footer, String date, String path, DefaultTableModel scheduleValues) {
         try {
             FileInputStream inputStream = new FileInputStream(path);
             Workbook workbook = WorkbookFactory.create(inputStream);
@@ -27,9 +25,9 @@ public void openFile(FooterDTO footer, String date, String path, DefaultTableMod
             Cell monthReference = sheet.getRow(3).getCell(0);
             monthReference.setCellValue(new SimpleDateFormat("dd/MM/yyyy").parse(date));
 
-            for(int row =0; row < scheduleValues.getRowCount(); row++){
-                for(int col=0;col < scheduleValues.getColumnCount(); col++){
-                    sheet.getRow(row+6).getCell(col).setCellValue(scheduleValues.getValueAt(row,col).toString());
+            for (int row = 0; row < scheduleValues.getRowCount(); row++) {
+                for (int col = 0; col < scheduleValues.getColumnCount(); col++) {
+                    sheet.getRow(row + 6).getCell(col).setCellValue(scheduleValues.getValueAt(row, col).toString());
                 }
             }
 
@@ -48,11 +46,12 @@ public void openFile(FooterDTO footer, String date, String path, DefaultTableMod
             workbook.write(outputStream);
             workbook.close();
             outputStream.close();
-            JOptionPane.showMessageDialog(null,"Arquivo Gravado com Sucesso","Sucesso",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Arquivo Gravado com Sucesso", "Sucesso",
+                    JOptionPane.INFORMATION_MESSAGE);
         } catch (IOException | EncryptedDocumentException | ParseException ex) {
-            JOptionPane.showMessageDialog(null,"Arquivo não encontrado ou já em uso, certifique - se de que esteja fechado ou caminho correto","Erro",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Arquivo não encontrado ou já em uso, " +
+                    "certifique - se de que esteja fechado ou caminho correto", "Erro", JOptionPane.ERROR_MESSAGE);
             ex.printStackTrace();
         }
     }
-
 }

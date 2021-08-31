@@ -5,94 +5,105 @@ import java.util.Map;
 import java.util.Random;
 import java.util.TreeMap;
 
+import static java.util.Calendar.SATURDAY;
+import static java.util.Calendar.SUNDAY;
+import static java.util.Calendar.DAY_OF_WEEK;
+
 public class DefineHours {
-    private int randomizeMinutes(int max, int min){
-        int random = new Random().nextInt(max+min)-min;
-        if(random == 0){
+    static final int max = 5;
+    static final int min = 5;
+    static final int FIRST_HOUR = 540;
+    static final int LUNCH_HOUR = 720;
+    static final int EXIT_HOUR = 1080;
+    static final int HOUR_IN_MINUTES = 60;
+    static final int MINUTES_OF_TOLERANCE = 5;
+    static final int MINUTES_OF_WORKDAY = 480;
+    static final int MINUTES_OF_HALF_WORKDAY = 180;
+
+    private int randomizeMinutes(int max, int min) {
+        int random = new Random().nextInt(max + min) - min;
+        if (random == 0) {
             return 1;
         }
         return random;
     }
-    protected Map<String, String> generateEntry(){
-        int max = 5;
-        int min = 5;
-        int hour1 = 9 * 60;
-        int hour2 = 12 * 60;
-        int hour4 = 18 * 60;
 
-        int firstCol = hour1 +randomizeMinutes(max,min);
+    public Map<String, String> generateEntry() {
 
-        if(firstCol < hour1){
-            max = -1;
-            min = 4;
-        }else{
-            min = 1;
+
+        int firstCol = FIRST_HOUR + randomizeMinutes(max, min);
+
+        if (firstCol < FIRST_HOUR) {
+            int max = -1;
+            int min = 4;
+        } else {
+            int min = 1;
         }
 
-        int secondCol = hour2 +randomizeMinutes(max,min);
+        int secondCol = LUNCH_HOUR + randomizeMinutes(max, min);
 
-        int correctionOut = secondCol-firstCol-180;
+        int correctionOut = secondCol - firstCol - MINUTES_OF_HALF_WORKDAY;
 
         int correctionLunch = 0;
-        if(correctionOut > 5){
-            correctionLunch = correctionOut-5;
-            correctionOut = -5;
+        if (correctionOut > MINUTES_OF_TOLERANCE) {
+            correctionLunch = correctionOut - MINUTES_OF_TOLERANCE;
+            correctionOut = -MINUTES_OF_TOLERANCE;
         }
-        if(correctionOut < -5){
-            correctionLunch = correctionOut+5;
-            correctionOut = 5;
+        if (correctionOut < -MINUTES_OF_TOLERANCE) {
+            correctionLunch = correctionOut + MINUTES_OF_TOLERANCE;
+            correctionOut = MINUTES_OF_TOLERANCE;
         }
-        if(correctionOut ==0){
+        if (correctionOut == 0) {
             correctionOut = 1;
         }
 
-        int thirdCol = secondCol +60+correctionLunch;
-        int fourthCol = hour4 +correctionOut;
+        int thirdCol = secondCol + HOUR_IN_MINUTES + correctionLunch;
+        int fourthCol = EXIT_HOUR + correctionOut;
 
-        int workDay = secondCol-firstCol+fourthCol-thirdCol;
-        fourthCol = fourthCol+(8*60-workDay);
+        int workDay = secondCol - firstCol + fourthCol - thirdCol;
+        fourthCol = fourthCol + (MINUTES_OF_WORKDAY - workDay);
 
         Map<String, String> entryMap = new TreeMap<>();
-        entryMap.put("1",formatHours(firstCol));
-        entryMap.put("2",formatHours(secondCol));
-        entryMap.put("3",formatHours(thirdCol));
-        entryMap.put("4",formatHours(fourthCol));
+        entryMap.put("1", formatHours(firstCol));
+        entryMap.put("2", formatHours(secondCol));
+        entryMap.put("3", formatHours(thirdCol));
+        entryMap.put("4", formatHours(fourthCol));
         return entryMap;
     }
 
-    protected String printEntry(Calendar c, int column, String entry){
+    public String printEntry(Calendar c, int column, String entry) {
         String weekend = verifyWeekend(c);
-        if(!weekend.isEmpty()){
-            if(column == 1){
+        if (!weekend.isEmpty()) {
+            if (column == 1) {
                 return weekend;
-            }else{
+            } else {
                 return "";
             }
         }
         return entry;
     }
 
-    private String verifyWeekend(Calendar c){
-        int intWeekDay = c.get(Calendar.DAY_OF_WEEK);
-        String weekDay="";
-        if(intWeekDay == Calendar.SATURDAY){
+    private String verifyWeekend(Calendar c) {
+        int intWeekDay = c.get(DAY_OF_WEEK);
+        String weekDay = "";
+        if (intWeekDay == SATURDAY) {
             weekDay = "SÁBADO";
         }
-        if(intWeekDay == Calendar.SUNDAY){
+        if (intWeekDay == SUNDAY) {
             weekDay = "DOMINGO";
         }
         return weekDay;
     }
 
-    private String formatHours(int hours){
-        String hour = String.valueOf(hours/60);
-        if(hour.length()==1){
-            hour="0"+hour;
+    private String formatHours(int hours) {
+        String hour = String.valueOf(hours / 60);
+        if (hour.length() == 1) {
+            hour = "0" + hour;
         }
-        String minute = String.valueOf(hours%60);
-        if(minute.length()==1){
-            minute="0"+minute;
+        String minute = String.valueOf(hours % 60);
+        if (minute.length() == 1) {
+            minute = "0" + minute;
         }
-        return hour+":"+minute;
+        return hour + ":" + minute;
     }
 }
