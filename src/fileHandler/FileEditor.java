@@ -16,7 +16,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class FileEditor {
 
-    public void openFile(FooterDTO footer, String date, String path, DefaultTableModel scheduleValues) {
+    public void manipulateFile(FooterDTO footer, String date, String path, DefaultTableModel scheduleValues) {
         try {
             FileInputStream inputStream = new FileInputStream(path);
             Workbook workbook = WorkbookFactory.create(inputStream);

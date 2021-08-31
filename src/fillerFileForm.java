@@ -89,7 +89,7 @@ public class fillerFileForm extends JFrame {
             String date = "01/" + (header.getMonth() + 1) + "/" + header.getYear();
             String path = JOptionPane.showInputDialog(null, "Caminho do Arquivo " +
                     "a ser atualizado: ");
-            file.openFile(footer, date, path, (DefaultTableModel) table1.getModel());
+            file.manipulateFile(footer, date, path, (DefaultTableModel) table1.getModel());
         });
     }
 
