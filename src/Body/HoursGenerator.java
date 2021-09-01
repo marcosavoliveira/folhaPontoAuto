@@ -9,7 +9,7 @@ import static java.util.Calendar.SATURDAY;
 import static java.util.Calendar.SUNDAY;
 import static java.util.Calendar.DAY_OF_WEEK;
 
-public class DefineHours {
+public class HoursGenerator {
     static final int max = 5;
     static final int min = 5;
     static final int FIRST_HOUR = 540;
@@ -32,7 +32,7 @@ public class DefineHours {
 
 
         int firstCol = FIRST_HOUR + randomizeMinutes(max, min);
-
+        //ainda em progresso com essa parte.
         if (firstCol < FIRST_HOUR) {
             int max = -1;
             int min = 4;

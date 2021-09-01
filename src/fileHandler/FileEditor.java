@@ -1,6 +1,9 @@
 package fileHandler;
 
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -10,8 +13,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
-
-import javax.swing.*;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class FileEditor {
@@ -28,8 +30,14 @@ public class FileEditor {
             outputStream.close();
             JOptionPane.showMessageDialog(null, "Arquivo Gravado com Sucesso", "Sucesso",
                     JOptionPane.INFORMATION_MESSAGE);
-        } catch (IOException | EncryptedDocumentException ex) {
-            JOptionPane.showMessageDialog(null, "Arquivo não encontrado ou já em uso, " +
+        } catch (FileNotFoundException e) {
+            JOptionPane.showMessageDialog(null, "Arquivo não encontrado",
+                    "Erro", JOptionPane.ERROR_MESSAGE);
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Falha ao tentar escrever no arquivo destino",
+                    "Erro", JOptionPane.ERROR_MESSAGE);
+        } catch (EncryptedDocumentException ex) {
+            JOptionPane.showMessageDialog(null, "Já em uso, " +
                     "certifique - se de que esteja fechado ou caminho correto", "Erro", JOptionPane.ERROR_MESSAGE);
             ex.printStackTrace();
         }

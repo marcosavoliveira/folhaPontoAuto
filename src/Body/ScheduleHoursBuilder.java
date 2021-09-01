@@ -30,19 +30,19 @@ public class ScheduleHoursBuilder {
 
     private DefaultTableModel setScheduleTableModel(Date firstScheduleDay, int numRows,
                                                     DefaultTableModel scheduleModel) {
-        DefineHours defineHours = new DefineHours();
+        HoursGenerator hoursGenerator = new HoursGenerator();
         scheduleModel.setRowCount(0);
         for (int i = 0; i < numRows; i++) {
             Calendar c = Calendar.getInstance();
             c.setTime(firstScheduleDay);
             c.add(DATE, i);
             Date day = c.getTime();
-            Map<String, String> entryMap = defineHours.generateEntry();
+            Map<String, String> entryMap = hoursGenerator.generateEntry();
             scheduleModel.addRow(new Object[]{new SimpleDateFormat("dd/MM/yyyy").format(day),
-                    defineHours.printEntry(c, 1, entryMap.get("1")),
-                    defineHours.printEntry(c, 2, entryMap.get("2")),
-                    defineHours.printEntry(c, 3, entryMap.get("3")),
-                    defineHours.printEntry(c, 4, entryMap.get("4")),
+                    hoursGenerator.printEntry(c, 1, entryMap.get("1")),
+                    hoursGenerator.printEntry(c, 2, entryMap.get("2")),
+                    hoursGenerator.printEntry(c, 3, entryMap.get("3")),
+                    hoursGenerator.printEntry(c, 4, entryMap.get("4")),
                     ""});
         }
         return scheduleModel;
