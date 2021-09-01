@@ -31,14 +31,15 @@ public class FileEditor {
             JOptionPane.showMessageDialog(null, "Arquivo Gravado com Sucesso", "Sucesso",
                     JOptionPane.INFORMATION_MESSAGE);
         } catch (FileNotFoundException e) {
-            JOptionPane.showMessageDialog(null, "Arquivo não encontrado",
+            JOptionPane.showMessageDialog(null, "Arquivo não encontrado ou Já em uso, \" +\n" +
+                            "                    \"certifique - se de que esteja fechado ou caminho correto",
                     "Erro", JOptionPane.ERROR_MESSAGE);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Falha ao tentar escrever no arquivo destino",
                     "Erro", JOptionPane.ERROR_MESSAGE);
         } catch (EncryptedDocumentException ex) {
-            JOptionPane.showMessageDialog(null, "Já em uso, " +
-                    "certifique - se de que esteja fechado ou caminho correto", "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Arquivo Protegido",
+                    "Erro", JOptionPane.ERROR_MESSAGE);
             ex.printStackTrace();
         }
     }
