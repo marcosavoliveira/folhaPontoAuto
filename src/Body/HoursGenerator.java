@@ -10,8 +10,6 @@ import static java.util.Calendar.SUNDAY;
 import static java.util.Calendar.DAY_OF_WEEK;
 
 public class HoursGenerator {
-    static final int max = 5;
-    static final int min = 5;
     static final int FIRST_HOUR = 540;
     static final int LUNCH_HOUR = 720;
     static final int EXIT_HOUR = 1080;
@@ -20,30 +18,37 @@ public class HoursGenerator {
     static final int MINUTES_OF_WORKDAY = 480;
     static final int MINUTES_OF_HALF_WORKDAY = 180;
 
-    private int randomizeMinutes(int max, int min) {
-        int random = new Random().nextInt(max + min) - min;
+
+    private int randomizeMinutes(int controlRandom) {
+        int random = new Random().nextInt(HoursGenerator.MINUTES_OF_TOLERANCE);
+        if (controlRandom > 0) {
+            random = random * -1;
+        } else {
+            random = defineIfIsPositive(random);
+        }
+
         if (random == 0) {
             return 1;
         }
+
         return random;
+    }
+
+    private int defineIfIsPositive(int minutesGenerated) {
+        if (new Random().nextInt(2) == 0) {
+            minutesGenerated = minutesGenerated * -1;
+        }
+        return minutesGenerated;
     }
 
     public Map<String, String> generateEntry() {
 
+        int controlRandom = randomizeMinutes(0);
+        int firstCol = FIRST_HOUR + controlRandom;
 
-        int firstCol = FIRST_HOUR + randomizeMinutes(max, min);
-        //ainda em progresso com essa parte.
-        if (firstCol < FIRST_HOUR) {
-            int max = -1;
-            int min = 4;
-        } else {
-            int min = 1;
-        }
-
-        int secondCol = LUNCH_HOUR + randomizeMinutes(max, min);
+        int secondCol = LUNCH_HOUR + randomizeMinutes(controlRandom);
 
         int correctionOut = secondCol - firstCol - MINUTES_OF_HALF_WORKDAY;
-
         int correctionLunch = 0;
         if (correctionOut > MINUTES_OF_TOLERANCE) {
             correctionLunch = correctionOut - MINUTES_OF_TOLERANCE;
